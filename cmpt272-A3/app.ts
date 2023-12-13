@@ -2,11 +2,15 @@
 import { Pig, PigCategory } from './pig';
 import { PigService } from './pigService';
 
+
+// 实例化PigService类
 const pigService = new PigService();
+// 获取页面上的元素
 const pigForm = document.getElementById('pigForm') as HTMLFormElement;
 const pigList = document.getElementById('pig-list');
 const categorySelect = document.getElementById('categorySelect') as HTMLSelectElement;
 
+// 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
     const pigService = new PigService(); 
@@ -14,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFormFields(categorySelect.value as PigCategory); 
 });
 
+     // 在文档状态为加载中时添加事件监听
 if (document.readyState === 'loading') {  
     console.log("loading")
     document.addEventListener('DOMContentLoaded', () => {
@@ -24,6 +29,7 @@ if (document.readyState === 'loading') {
     initializeApp();
 }
 
+// 初始化应用
 function initializeApp() {
     console.log('Initializing app');
     const pigService = new PigService();
@@ -34,13 +40,15 @@ function initializeApp() {
 
 
 
-
+// 更新表单字段
 function updateFormFields(category: PigCategory) {
+    // 获取页面上的元素
     const swimmingAbilityContainer = document.getElementById('swimmingAbilityContainer');
     const languageContainer = document.getElementById('languageContainer');
     const runningAbilityContainer = document.getElementById('runningAbilityContainer');
     const strengthContainer = document.getElementById('strengthContainer');
 
+    // 根据猪的类别显示或隐藏不同的字段
     [swimmingAbilityContainer, languageContainer, runningAbilityContainer, strengthContainer]
         .forEach(container => container?.classList.add('hidden'));
 
@@ -50,9 +58,11 @@ function updateFormFields(category: PigCategory) {
     if (category === 'Black') strengthContainer?.classList.remove('hidden');
 }
 
+// 类别选择变化时更新表单字段
 categorySelect.addEventListener('change', (event) => {
     updateFormFields((event.target as HTMLSelectElement).value as PigCategory);
 });
+
 
 // document.getElementById("submit")!.addEventListener('click', function () {
 
@@ -65,14 +75,15 @@ categorySelect.addEventListener('change', (event) => {
     
 // })
 
-//submit
+//// 表单提交事件处理
 // const pigForm = document.getElementById('pigForm') as HTMLFormElement;
 pigForm.addEventListener('submit', (event) => {
     event.preventDefault();
     
     const formData = new FormData(pigForm);
     const category = formData.get('category') as PigCategory;
-
+    
+    // 创建新的Pig对象
     const newPig = new Pig(
         formData.get('name') as string,
         formData.get('breed') as string,
@@ -89,9 +100,11 @@ pigForm.addEventListener('submit', (event) => {
 
     pigService.addPig(newPig);
     updatePigList();
+    // 添加新猪并更新列表
 
     pigForm.reset();
     pigForm.classList.add('hidden');
+    // 重置表单并隐藏
 
     alert("Pig added successfully!");
     
@@ -111,7 +124,7 @@ pigForm.addEventListener('submit', (event) => {
 //     });
 // }
 
-
+// 更新猪列表显示
 function updatePigList() {
     console.log('Updating pig list...'); // 调试输出
     console.log(pigService); // 查看实例状态
@@ -121,6 +134,7 @@ function updatePigList() {
     pigList.innerHTML = '';
     const pigsGrouped = pigService.getPigsGroupedByCategory();
 
+    // 遍历不同类别的猪并显示
     for (const categoryKey in pigsGrouped) {
         if (pigsGrouped.hasOwnProperty(categoryKey)) {
             const category = categoryKey as PigCategory; // Cast the key to PigCategory
@@ -147,6 +161,7 @@ function updatePigList() {
 //     console.log(pc.getAll())
 // })
 
+// 创建更多信息按钮
 function createMoreInfoButton(pig: Pig): HTMLButtonElement {
     const button = document.createElement('button');
     button.textContent = 'More Info';
@@ -156,6 +171,7 @@ function createMoreInfoButton(pig: Pig): HTMLButtonElement {
     return button;
 }
 
+// 创建删除按钮
 function createDeleteButton(pigName: string): HTMLButtonElement {
     const button = document.createElement('button');
     button.textContent = 'Delete';
@@ -168,6 +184,7 @@ function createDeleteButton(pigName: string): HTMLButtonElement {
     });
     return button;
 }
-
+// 页面加载时初始化表单字段
+updateFormFields(categorySelect.value as PigCategory);
 // Initialize form fields on page load
 updateFormFields(categorySelect.value as PigCategory);
