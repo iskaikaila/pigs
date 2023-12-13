@@ -1,0 +1,128 @@
+<!-- //index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Farm Management: Pig Tracker</h1>
+    <div id="app">
+        <button id="addPigButton">Add Pig</button>
+        <div id="pigFormModal" class="modal">
+            <div class="modal-content">
+                <form id="pigForm" class="hidden">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="breed" placeholder="Breed" required>
+                    <input type="number" name="height" placeholder="Height" required>
+                    <input type="number" name="weight" placeholder="Weight" required>
+                    <select name="category" id="categorySelect" required>
+                        <option value="">Select Category</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Chestnut">Chestnut</option>
+                        <option value="White">White</option>
+                        <option value="Black">Black</option>
+                    </select>
+                    <input type="text" name="personality" placeholder="Personality">
+                    <div id="swimmingAbilityContainer" class="hidden">
+                        <label for="swimmingAbility">Swimming Ability (0-100):</label>
+                        <input type="number" name="swimmingAbility" placeholder="0-100">
+                    </div>
+                    <div id="languageContainer" class="hidden">
+                        <label for="language">Language:</label>
+                        <input type="text" name="language" placeholder="Language">
+                    </div>
+                    <div id="runningAbilityContainer" class="hidden">
+                        <label for="runningAbility">Running Ability (0-100):</label>
+                        <input type="number" name="runningAbility" placeholder="0-100">
+                    </div>
+                    <div id="strengthContainer" class="hidden">
+                        <label for="strength">Strength (1-10):</label>
+                        <input type="number" name="strength" placeholder="1-10">
+                    </div>
+                    <div id="remarksContainer" class="hidden">
+                        <textarea name="remarks" placeholder="Remarks"></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div id="pig-list">
+            <!-- Pigs will be listed and grouped here -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+        document.getElementById('addPigButton').addEventListener('click', function () {
+            var modal = document.getElementById('pigFormModal');
+            modal.style.display = 'block';
+        });
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            var modal = document.getElementById('pigFormModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Hide modal on form submission
+        document.getElementById('pigForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevents form from submitting normally
+            var modal = document.getElementById('pigFormModal');
+            modal.style.display = 'none';
+            // Here you can add code to handle the form data
+        });
+
+
+    </script>
+
+    <script>
+        document.getElementById('addPigButton').addEventListener('click', function () {
+            var form = document.getElementById('pigForm');
+            form.classList.toggle('hidden');
+        });
+
+        document.getElementById('categorySelect').addEventListener('change', function () {
+            var category = this.value;
+            var swimmingAbilityContainer = document.getElementById('swimmingAbilityContainer');
+            var languageContainer = document.getElementById('languageContainer');
+            var runningAbilityContainer = document.getElementById('runningAbilityContainer');
+            var strengthContainer = document.getElementById('strengthContainer');
+            var remarksContainer = document.getElementById('remarksContainer');
+
+            swimmingAbilityContainer.style.display = category === 'Grey' ? 'block' : 'none';
+            languageContainer.style.display = category === 'Chestnut' ? 'block' : 'none';
+            runningAbilityContainer.style.display = category === 'White' ? 'block' : 'none';
+            strengthContainer.style.display = category === 'Black' ? 'block' : 'none';
+            remarksContainer.style.display = category ? 'block' : 'none';
+        });
+    </script>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.47/system-csp-production.js"
+        integrity="sha512-a9MEwZ/fjbukKadVs1ll0UUQj6eDrbIOosbrVlXtB0Xsyp8CS8WfltP03UxVzVmpYw+QhX1SphHlePMTVNVlPA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+    <script type="text/javascript">
+        System.defaultJSExtensions = true;
+        System.import('app');
+    </script>
+</body>
